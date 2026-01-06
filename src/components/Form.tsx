@@ -1,106 +1,154 @@
 import { FC, useEffect, useState } from "react";
-import months from "../data/months.json";
+import { getDate } from "../helpers/mappers";
+import { DateKeys, DateValues, IDate } from "../helpers/interfaces";
+import {
+  findMonthByOrder,
+  getFilteredDays,
+  getFilteredMonths,
+  getValidDate,
+  getYears,
+  getZero,
+  parseReactForm,
+} from "../helpers/utils";
 
-import * as Types from "../interfaces";
-
-interface IFormProps {
-  updateState: (data: Types.Months.IState) => void;
+interface FormProps {
+  setDate: (data: Date | null) => void;
 }
 
-const Form: FC<IFormProps> = ({ updateState }) => {
-  const [yearInfo, setYearInfo] = useState<number | null>(null);
-  const [dateInfo, setDateInfo] = useState<number | null>(null);
-  const [monthInfo, setMonthInfo] = useState<Types.Months.IMonthInfo>({
-    order: null,
-    name: { uz: "selectionMonth", en: null },
-  });
+const Form: FC<FormProps> = ({ setDate }) => {
+  const [birthDate, setBirthDate] = useState<IDate>(getDate());
 
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1;
-  const currentDay = currentDate.getDate();
+  const setBirthDateByKey = (key: DateKeys, value: DateValues) => {
+    setBirthDate(prev => ({ ...prev, [key]: value }));
+  };
 
-  const years = Array.from({ length: 100 }, (_, i) => currentYear + 1 - (i + 1));
-  const filteredMonths =
-    currentYear === yearInfo ? months.filter(m => m.order <= currentMonth) : months;
+  const clearBirthDate = () => {
+    setBirthDate(getDate());
+  };
 
-  const filteredDays =
-    currentYear === yearInfo && currentMonth === monthInfo.order
-      ? Array.from({ length: currentDay }, (_, i) => currentDay - i).reverse()
-      : Array.from(
-          { length: months.find(m => m.order === monthInfo.order)?.days || 0 },
-          (_, i) => i + 1
-        );
+  const years = getYears();
+  const month = findMonthByOrder(+(birthDate.month ?? 0));
+  const filteredDays = getFilteredDays(month.order);
+  const filteredMonths = getFilteredMonths(birthDate.year!);
 
   useEffect(() => {
-    setMonthInfo({ name: { uz: "selectionMonth", en: null }, order: null });
-    setDateInfo(null);
-  }, [yearInfo]);
+    setBirthDate(prev => ({ ...prev, month: null, day: null }));
+  }, [birthDate.year]);
+
+  const handleCalculateLifeDays = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const payload = parseReactForm<IDate>(e);
+    clearBirthDate();
+    if (!payload.year || !payload.month || !payload.day) return;
+    const dateStr = `${getZero(payload.day!)}.${getZero(month.order + 1)}.${payload.year}`;
+    console.log(dateStr);
+    setDate(getValidDate(dateStr));
+  };
+
+  const selectBase =
+    "h-11 w-full appearance-none rounded-md border border-neutral-800 bg-neutral-950/60 px-3 pr-9 text-sm text-neutral-100 " +
+    "shadow-sm outline-none transition " +
+    "hover:border-neutral-700 hover:bg-neutral-950 " +
+    "focus-visible:ring-2 focus-visible:ring-neutral-700 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 " +
+    "disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
-    <form className="form">
-      <h2 className="form__title">Yashagan kunlarni hisoblash</h2>
-      <div className="form__inner">
-        <select
-          value={(yearInfo as number) || "selectionYear"}
-          onChange={e => setYearInfo(+e.target.value)}
-        >
-          <option value="selectionYear" disabled hidden>
-            yilni tanlang
-          </option>
-          {years.map(year => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
+    <form onSubmit={handleCalculateLifeDays} className="mx-auto w-full max-w-2xl">
+      <h2 className="mb-4 text-center text-xl font-semibold tracking-tight text-neutral-100 sm:text-2xl">
+        Bugungacha yashagan kunlaringiz
+      </h2>
 
-        <select
-          disabled={!yearInfo}
-          value={
-            monthInfo.order
-              ? `${monthInfo.name.uz}-${monthInfo.name.en}-${monthInfo.order}`
-              : "selectionMonth"
-          }
-          onChange={e => {
-            const [uz, en, order] = e.target.value.split("-");
+      <div className="grid gap-3 sm:grid-cols-4 sm:items-end">
+        <div className="sm:col-span-1">
+          <label className="mb-1.5 block text-xs font-medium text-neutral-400">Yil</label>
+          <div className="relative">
+            <select
+              className={selectBase}
+              defaultValue={"selectionYear"}
+              value={birthDate.year || "selectionYear"}
+              name="year"
+              onChange={e => {
+                setBirthDateByKey("year", +e.target.value);
+              }}
+            >
+              <option value="selectionYear" disabled hidden>
+                yilni tanlang
+              </option>
+              {years.map(year => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">▾</span>
+          </div>
+        </div>
 
-            setMonthInfo({ name: { uz, en }, order: +order });
-          }}
-        >
-          <option value="selectionMonth" disabled hidden>
-            oyni tanlang
-          </option>
-          {filteredMonths.map(month => (
-            <option key={month.order} value={`${month.name.uz}-${month.name.en}-${month.order}`}>
-              {month.name.uz}
-            </option>
-          ))}
-        </select>
+        <div className="sm:col-span-1">
+          <label className="mb-1.5 block text-xs font-medium text-neutral-400">Oy</label>
+          <div className="relative">
+            <select
+              className={selectBase}
+              disabled={!birthDate.year}
+              name="month"
+              defaultValue={"selectionMonth"}
+              value={birthDate.month! || "selectionMonth"}
+              onChange={e => {
+                setBirthDateByKey("month", e.target.value);
+              }}
+            >
+              <option value="selectionMonth" disabled hidden>
+                oyni tanlang
+              </option>
+              {filteredMonths.map(month => (
+                <option key={month.order} value={`${month.order}`}>
+                  {month.name.uz}
+                </option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">▾</span>
+          </div>
+        </div>
 
-        <select
-          disabled={!monthInfo.order}
-          value={(dateInfo as number) || "selectionDate"}
-          onChange={e => setDateInfo(+e.target.value)}
-        >
-          <option value="selectionDate" disabled hidden>
-            sanani tanlang
-          </option>
-          {filteredDays.map(date => (
-            <option key={date} value={date}>
-              {date}
-            </option>
-          ))}
-        </select>
-        <button
-          type="button"
-          disabled={!dateInfo}
-          onClick={() => updateState({ date: dateInfo, month: monthInfo.name.en, year: yearInfo })}
-        >
-          hisoblash
-        </button>
+        <div className="sm:col-span-1">
+          <label className="mb-1.5 block text-xs font-medium text-neutral-400">Sana</label>
+          <div className="relative">
+            <select
+              className={selectBase}
+              disabled={!birthDate.month}
+              name="day"
+              value={birthDate.day || "selectionDay"}
+              onChange={e => setBirthDateByKey("day", +e.target.value)}
+            >
+              <option value="selectionDay" disabled hidden>
+                sanani tanlang
+              </option>
+              {filteredDays.map(date => (
+                <option key={date} value={date}>
+                  {date}
+                </option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">▾</span>
+          </div>
+        </div>
+
+        <div className="sm:col-span-1">
+          <button
+            type="submit"
+            disabled={!birthDate.year || !birthDate.month || !birthDate.day}
+            className="h-11 w-full rounded-md bg-neutral-100 px-4 text-sm font-semibold text-neutral-900
+                       shadow-sm transition
+                       hover:bg-white active:scale-[0.99]
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-700 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950
+                       disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            hisoblash
+          </button>
+        </div>
       </div>
     </form>
   );
 };
+
 export default Form;

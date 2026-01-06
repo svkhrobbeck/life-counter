@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
@@ -19,7 +20,7 @@ export default defineConfig({
     },
     manifest: true,
   },
-  plugins: [react(), tsconfigPaths()],
+  plugins: [tailwindcss(), react(), tsconfigPaths()],
   optimizeDeps: {
     include: ["react", "react-dom"],
   },

@@ -1,3 +1,2 @@
-export { default as Form } from "./Form";
-export { default as Footer } from "./Footer";
-export { default as CalcedDays } from "./CalcedDays";
+export { default as Form } from "./form";
+export { default as Footer } from "./footer";

@@ -1,14 +1,15 @@
 [
   {
-    "order": 1,
+    "order": 0,
     "name": {
       "uz": "Yanvar",
       "en": "January"
     },
+    "linkedWithLeap": false,
     "days": 31
   },
   {
-    "order": 2,
+    "order": 1,
     "name": {
       "uz": "Fevral",
       "en": "February"
@@ -17,83 +18,93 @@
     "days": 28
   },
   {
-    "order": 3,
+    "order": 2,
     "name": {
       "uz": "Mart",
       "en": "March"
     },
+    "linkedWithLeap": false,
     "days": 31
   },
   {
-    "order": 4,
+    "order": 3,
     "name": {
       "uz": "Aprel",
       "en": "April"
     },
+    "linkedWithLeap": false,
     "days": 30
   },
   {
-    "order": 5,
+    "order": 4,
     "name": {
       "uz": "May",
       "en": "May"
     },
+    "linkedWithLeap": false,
     "days": 31
   },
   {
-    "order": 6,
+    "order": 5,
     "name": {
       "uz": "Iyun",
       "en": "June"
     },
+    "linkedWithLeap": false,
     "days": 30
   },
   {
-    "order": 7,
+    "order": 6,
     "name": {
       "uz": "Iyul",
       "en": "July"
     },
+    "linkedWithLeap": false,
+    "days": 31
+  },
+  {
+    "order": 7,
+    "name": {
+      "uz": "Avgust",
+      "en": "August"
+    },
+    "linkedWithLeap": false,
     "days": 31
   },
   {
     "order": 8,
     "name": {
-      "uz": "Avgust",
-      "en": "August"
+      "uz": "Sentabr",
+      "en": "September"
     },
-    "days": 31
+    "linkedWithLeap": false,
+    "days": 30
   },
   {
     "order": 9,
     "name": {
-      "uz": "Sentabr",
-      "en": "September"
+      "uz": "Oktabr",
+      "en": "October"
     },
-    "days": 30
+    "linkedWithLeap": false,
+    "days": 31
   },
   {
     "order": 10,
     "name": {
-      "uz": "Oktabr",
-      "en": "October"
+      "uz": "Noyabr",
+      "en": "November"
     },
-    "days": 31
+    "linkedWithLeap": false,
+    "days": 30
   },
   {
     "order": 11,
     "name": {
-      "uz": "Noyabr",
-      "en": "November"
-    },
-    "days": 30
-  },
-  {
-    "order": 12,
-    "name": {
       "uz": "Dekabr",
       "en": "December"
     },
+    "linkedWithLeap": false,
     "days": 31
   }
 ]
