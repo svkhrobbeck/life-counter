@@ -80,7 +80,7 @@ const Form: FC<FormProps> = ({ setDate }) => {
                 </option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">▾</span>
+            <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-neutral-500">▾</span>
           </div>
         </div>
 
@@ -106,7 +106,7 @@ const Form: FC<FormProps> = ({ setDate }) => {
                 </option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">▾</span>
+            <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-neutral-500">▾</span>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ const Form: FC<FormProps> = ({ setDate }) => {
                 </option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">▾</span>
+            <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-neutral-500">▾</span>
           </div>
         </div>
 
@@ -137,11 +137,7 @@ const Form: FC<FormProps> = ({ setDate }) => {
           <button
             type="submit"
             disabled={!birthDate.year || !birthDate.month || !birthDate.day}
-            className="h-11 w-full rounded-md bg-neutral-100 px-4 text-sm font-semibold text-neutral-900
-                       shadow-sm transition
-                       hover:bg-white active:scale-[0.99]
-                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-700 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950
-                       disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-11 w-full rounded-md bg-neutral-100 px-4 text-sm font-semibold text-neutral-900 shadow-sm transition hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-700 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 focus-visible:outline-none active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
           >
             hisoblash
           </button>

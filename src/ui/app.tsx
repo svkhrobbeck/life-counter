@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { calculateDaysLived, getYearProgress } from "./helpers/utils";
-import { Footer, Form } from "./components";
+import { calculateDaysLived, getYearProgress } from "../helpers/utils";
+import { Footer, Form } from ".";
 
 const App = () => {
   const [date, setDate] = useState<Date | null>(null);
@@ -19,25 +19,22 @@ const App = () => {
         <div className="mb-8 text-center sm:mb-10">
           <h2 className="mx-auto max-w-3xl text-xl leading-[1.8] font-semibold tracking-tight sm:text-3xl md:text-4xl">
             Bugun{" "}
-            <span className="rounded-md border text-nowrap border-neutral-800 bg-neutral-900/60 px-2 py-0.5">
+            <span className="rounded-md border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-nowrap">
               {year}-yil
             </span>{" "}
             ning{" "}
-            <span className="rounded-md border text-nowrap border-neutral-800 bg-neutral-900/60 px-2 py-0.5">
+            <span className="rounded-md border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-nowrap">
               {pastDays}-kuni
             </span>
           </h2>
 
           <p className="mt-3 text-sm text-neutral-400 sm:text-base">
-            (yangi yilgacha <span className="text-neutral-200 font-medium">{remainingDays}</span> kun qoldi)
+            (yangi yilgacha <span className="font-medium text-neutral-200">{remainingDays}</span> kun qoldi)
           </p>
         </div>
 
         {/* Main card */}
-        <section
-          className="relative rounded-2xl border border-neutral-800/80 bg-neutral-950/40 p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_80px_rgba(0,0,0,0.55)]
-                     backdrop-blur sm:p-6"
-        >
+        <section className="relative rounded-2xl border border-neutral-800/80 bg-neutral-950/40 p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_80px_rgba(0,0,0,0.55)] backdrop-blur sm:p-6">
           {/* subtle top highlight */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 

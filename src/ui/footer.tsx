@@ -9,8 +9,7 @@ const Footer = () => {
           href={`https://t.me/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex items-center gap-3 rounded-md px-3 py-1.5 text-sm text-neutral-400 transition
-                     hover:bg-neutral-900/60 hover:text-neutral-100"
+          className="group flex items-center gap-3 rounded-md px-3 py-1.5 text-sm text-neutral-400 transition hover:bg-neutral-900/60 hover:text-neutral-100"
         >
           {imgUrl && (
             <img src={imgUrl} width={24} height={24} alt="avatar" className="rounded-full border border-neutral-800" />
