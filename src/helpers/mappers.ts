@@ -1,4 +1,5 @@
 import { get } from "lodash";
+
 import { IDate } from "./interfaces";
 
 export const getDate = (date?: unknown): IDate => {

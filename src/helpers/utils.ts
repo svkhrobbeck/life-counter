@@ -1,11 +1,12 @@
 import moment from "moment";
-import months from "../data/months.json";
+
+import months from "@/data/months.json";
+
 import { DocumentData, IMonth, IDateParts } from "./interfaces";
 
-export const parseReactForm = <T extends DocumentData>(e: React.FormEvent<HTMLFormElement>, reset: boolean = true) => {
+export const parseReactForm = <T extends DocumentData>(e: React.FormEvent<HTMLFormElement>) => {
   const formData = new FormData(e?.currentTarget);
   const payload = Object.fromEntries(formData.entries());
-  if (reset) e?.currentTarget.reset();
   return payload as unknown as T;
 };
 

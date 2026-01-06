@@ -1,15 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import { getDate } from "../helpers/mappers";
-import { DateKeys, DateValues, IDate } from "../helpers/interfaces";
-import {
-  findMonthByOrder,
-  getFilteredDays,
-  getFilteredMonths,
-  getValidDate,
-  getYears,
-  getZero,
-  parseReactForm,
-} from "../helpers/utils";
+
+import * as Utils from "@/helpers/utils";
+import { getDate } from "@/helpers/mappers";
+import { DateKeys, DateValues, IDate } from "@/helpers/interfaces";
 
 interface FormProps {
   setDate: (data: Date | null) => void;
@@ -22,14 +15,10 @@ const Form: FC<FormProps> = ({ setDate }) => {
     setBirthDate(prev => ({ ...prev, [key]: value }));
   };
 
-  const clearBirthDate = () => {
-    setBirthDate(getDate());
-  };
-
-  const years = getYears();
-  const month = findMonthByOrder(+(birthDate.month ?? 0));
-  const filteredDays = getFilteredDays(month.order);
-  const filteredMonths = getFilteredMonths(birthDate.year!);
+  const years = Utils.getYears();
+  const month = Utils.findMonthByOrder(+(birthDate.month ?? 0));
+  const filteredDays = Utils.getFilteredDays(month.order);
+  const filteredMonths = Utils.getFilteredMonths(birthDate.year!);
 
   useEffect(() => {
     setBirthDate(prev => ({ ...prev, month: null, day: null }));
@@ -37,12 +26,10 @@ const Form: FC<FormProps> = ({ setDate }) => {
 
   const handleCalculateLifeDays = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const payload = parseReactForm<IDate>(e);
-    clearBirthDate();
+    const payload = Utils.parseReactForm<IDate>(e);
     if (!payload.year || !payload.month || !payload.day) return;
-    const dateStr = `${getZero(payload.day!)}.${getZero(month.order + 1)}.${payload.year}`;
-    console.log(dateStr);
-    setDate(getValidDate(dateStr));
+    const dateStr = `${Utils.getZero(payload.day!)}.${Utils.getZero(month.order + 1)}.${payload.year}`;
+    setDate(Utils.getValidDate(dateStr));
   };
 
   const selectBase =

@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { calculateDaysLived, getYearProgress } from "../helpers/utils";
+
+import { calculateDaysLived, getYearProgress } from "@/helpers/utils";
+
 import { Footer, Form } from ".";
 
 const App = () => {
